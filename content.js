@@ -1,4 +1,6 @@
 // This script will handle scanning the website and picking a random word.
+
+// Check if element is in the current viewport
 function isInViewport(element) {
     const rect = element.getBoundingClientRect();
     return (
@@ -9,6 +11,7 @@ function isInViewport(element) {
     );
 }
 
+// Get all text nodes that are in the viewport
 function getAllTextNodes() {
     const walker = document.createTreeWalker(
         document.body,
@@ -20,7 +23,7 @@ function getAllTextNodes() {
     let node;
     let textNodes = [];
 
-    while(node = walker.nextNode()) {
+    while (node = walker.nextNode()) {
         if (isInViewport(node.parentElement)) {
             textNodes.push(node);
         }
@@ -29,6 +32,7 @@ function getAllTextNodes() {
     return textNodes;
 }
 
+// Pick a random word from the text nodes
 function pickRandomWord(textNodes) {
     const allText = textNodes.map(node => node.nodeValue.trim()).join(' ');
     const words = allText.split(/\s+/).filter(word => word.length > 0);
@@ -36,6 +40,7 @@ function pickRandomWord(textNodes) {
     return words[Math.floor(Math.random() * words.length)];
 }
 
+// Create and display a popup with the chosen word
 function createPopup(word) {
     const popup = document.createElement('div');
     popup.textContent = word;
@@ -51,7 +56,7 @@ function createPopup(word) {
     setTimeout(() => document.body.removeChild(popup), 3000);
 }
 
-// Main function to execute
+// Main function to execute the process
 function main() {
     const textNodes = getAllTextNodes();
     const randomWord = pickRandomWord(textNodes);
@@ -60,9 +65,21 @@ function main() {
     }
 }
 
-// Execute main function when the DOM is fully loaded
+// Listen for messages from the popup
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if (request.action === "pickWord") {
+            main();
+        }
+    }
+);
+
+// The following code ensures the main function is only executed when a message is received
+// Remove these lines if you don't want the extension to execute immediately on page load
+/*
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', main);
 } else {
     main();
 }
+*/

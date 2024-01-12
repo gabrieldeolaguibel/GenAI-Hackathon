@@ -2,8 +2,20 @@
 document.addEventListener('DOMContentLoaded', function() {
     var toggle = document.getElementById('toggle-extension');
 
-    // On toggle change, send a message to background.js
     toggle.addEventListener('change', function() {
-        chrome.runtime.sendMessage({toggleState: toggle.checked});
+        if (toggle.checked) {
+            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                chrome.scripting.executeScript({
+                    target: { tabId: tabs[0].id },
+                    function: pickAndShowWord
+                });
+            });
+        }
     });
 });
+
+function pickAndShowWord() {
+    // We will send a message to the content script
+    chrome.runtime.sendMessage({action: "pickWord"});
+}
+
