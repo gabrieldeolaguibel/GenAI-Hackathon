@@ -1,0 +1,1 @@
+// This will handle the on/off state of the extension.

@@ -1,0 +1,1 @@
+// This script will handle scanning the website and picking a random word.
