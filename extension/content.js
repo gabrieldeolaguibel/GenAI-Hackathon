@@ -1,4 +1,4 @@
-// This script will handle scanning the website and picking a random word.
+// This script will handle scanning the website and sending text to the Flask server.
 
 // Check if element is in the current viewport
 function isInViewport(element) {
@@ -44,42 +44,29 @@ function getAllTextInViewPort() {
     return visibleText.join(' ');
 }
 
-
-// Create and display a popup with the visible text
-function createPopup(text) {
-    const popup = document.createElement('div');
-    popup.textContent = text;
-    popup.style.position = 'fixed';
-    popup.style.top = '50%';
-    popup.style.left = '50%';
-    popup.style.transform = 'translate(-50%, -50%)';
-    popup.style.padding = '20px';
-    popup.style.backgroundColor = 'lightblue';
-    popup.style.color = 'black';
-    popup.style.border = '2px solid black';
-    popup.style.zIndex = '10000';
-    popup.style.fontSize = '16px';
-    popup.style.borderRadius = '10px';
-    popup.style.textAlign = 'center';
-    popup.style.maxHeight = '80vh';
-    popup.style.overflowY = 'auto';
-    popup.style.width = '80%';
-    popup.style.boxShadow = '0px 0px 10px rgba(0,0,0,0.5)';
-
-    document.body.appendChild(popup);
-
-    setTimeout(() => {
-        if (popup.parentNode) {
-            popup.parentNode.removeChild(popup);
-        }
-    }, 10000); // Increased timeout for longer text
+// Function to send text to the server and handle response
+function sendTextToServer(text) {
+    fetch('http://127.0.0.1:5000/process_text', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text: text })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Chosen Word:', data.selectedWord);
+        // Additional actions based on the chosen word
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
-
 
 // Main function to execute the process
 function main() {
     const visibleText = getAllTextInViewPort();
-    createPopup(visibleText);
+    sendTextToServer(visibleText);
 }
 
 // Immediately execute main when script is injected
