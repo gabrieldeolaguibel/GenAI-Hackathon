@@ -53,20 +53,22 @@ function showQuizPopup(chosenWord, quizOptions) {
     quizContainer.style.bottom = '10px';
     quizContainer.style.right = '10px';
     quizContainer.style.padding = '20px';
-    quizContainer.style.backgroundColor = 'white';
-    quizContainer.style.border = '1px solid black';
+    quizContainer.style.backgroundColor = '#f9f9f9';
+    quizContainer.style.border = '2px solid #3498db';
+    quizContainer.style.borderRadius = '10px'; 
+    quizContainer.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.2)'; 
     quizContainer.style.zIndex = '10000';
     quizContainer.style.width = '300px';
 
     // Quiz content
     const content = `
-        <h2>Learn a new word from your current page!</h2>
+        <h2 style="color: #3498db; text-align: center;">Learn a new word from your current page!</h2>
         <p>What is "${chosenWord}" translated to in Spanish?</p>
-        <ul style="list-style-type: none; padding: 0;">
-            <li>A. ${quizOptions.option1}</li>
-            <li>B. ${quizOptions.option2}</li>
-            <li>C. ${quizOptions.option3}</li>
-            <li>D. ${quizOptions.option4}</li>
+        <ul id="quiz-options-list" style="list-style-type: none; padding: 0;">
+            <div id="option1" class="quiz-option">A. ${quizOptions.option1}</div>
+            <div id="option2" class="quiz-option">B. ${quizOptions.option2}</div>
+            <div id="option3" class="quiz-option">C. ${quizOptions.option3}</div>
+            <div id="option4" class="quiz-option">D. ${quizOptions.option4}</div>
         </ul>
     `;
 
@@ -75,6 +77,38 @@ function showQuizPopup(chosenWord, quizOptions) {
 
     // Append quiz container to the body
     document.body.appendChild(quizContainer);
+
+    // Add event listeners for quiz options
+    const quizOptionsList = document.querySelectorAll('.quiz-option');
+
+    quizOptionsList.forEach((option) => {
+        option.addEventListener('click', (event) => handleOptionClick(event, quizOptions.correct));
+    });
+}
+
+// Function to handle option click
+function handleOptionClick(event, correctOption) {
+    const selectedOption = event.target;
+
+    if (selectedOption.innerText.includes(correctOption)) {
+        selectedOption.style.backgroundColor = 'green'; // Correct answer, turn background green
+        selectedOption.style.color = 'white'; // Set text color to white for better visibility
+    } else {
+        selectedOption.style.backgroundColor = 'red'; // Incorrect answer, turn background red
+        selectedOption.style.color = 'white'; // Set text color to white for better visibility
+
+        // Find the correct option and turn its background green
+        const correctOptionElement = document.querySelector('.quiz-option:contains(' + correctOption + ')');
+        correctOptionElement.style.backgroundColor = 'green';
+        correctOptionElement.style.color = 'white';
+    }
+
+    // Delay to display the correct/incorrect styling before closing the quiz
+    setTimeout(() => {
+        // Remove the quiz popup
+        const quizPopup = document.getElementById('quiz-popup');
+        quizPopup.parentNode.removeChild(quizPopup);
+    }, 2000); // Adjust the delay time as needed
 }
 
 // Function to send text to the server and handle response
