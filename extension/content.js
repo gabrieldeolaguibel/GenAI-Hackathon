@@ -35,10 +35,14 @@ function getAllTextNodes() {
 // Pick a random word from the text nodes
 function pickRandomWord(textNodes) {
     const allText = textNodes.map(node => node.nodeValue.trim()).join(' ');
-    const words = allText.split(/\s+/).filter(word => word.length > 0);
+    const words = allText.split(/\s+/)
+        .filter(word => word.length >= 3) // Words should be at least three characters long
+        .filter(word => /^[a-zA-Z]+$/.test(word)); // Words should only contain alphabetical characters
+
     if (words.length === 0) return null;
     return words[Math.floor(Math.random() * words.length)];
 }
+
 
 // Create and display a popup with the chosen word
 function createPopup(word) {
