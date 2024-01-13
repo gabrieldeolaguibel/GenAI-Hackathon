@@ -42,6 +42,7 @@ function pickRandomWord(textNodes) {
 
 // Create and display a popup with the chosen word
 function createPopup(word) {
+    console.log("Creating popup with word: ", word);
     const popup = document.createElement('div');
     popup.textContent = word;
     popup.style.position = 'fixed';
@@ -58,18 +59,24 @@ function createPopup(word) {
 
 // Main function to execute the process
 function main() {
+    console.log("Executing main function in content.js");
     const textNodes = getAllTextNodes();
+    console.log("Text nodes found: ", textNodes.length);
     const randomWord = pickRandomWord(textNodes);
+    console.log("Random word picked: ", randomWord);
     if (randomWord) {
         createPopup(randomWord);
+    } else {
+        console.log("No word found to display in popup");
     }
 }
+
 
 // Listen for messages from the popup
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.action === "pickWord") {
-            console.log("Message received. Executing main function.");
+            console.log("Message received in content script. Executing main function.");
             main();
         }
     }
