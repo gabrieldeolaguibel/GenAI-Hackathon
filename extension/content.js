@@ -44,18 +44,31 @@ function pickRandomWord(textNodes) {
 function createPopup(word) {
     console.log("Creating popup with word: ", word);
     const popup = document.createElement('div');
-    popup.textContent = word;
+    popup.textContent = `Selected word: ${word}`;
     popup.style.position = 'fixed';
-    popup.style.bottom = '20px';
-    popup.style.left = '20px';
-    popup.style.padding = '10px';
-    popup.style.backgroundColor = 'white';
-    popup.style.border = '1px solid black';
-    popup.style.zIndex = 1000;
+    popup.style.top = '50%';   // Center vertically
+    popup.style.left = '50%';  // Center horizontally
+    popup.style.transform = 'translate(-50%, -50%)'; // Adjust for centering
+    popup.style.padding = '20px';
+    popup.style.backgroundColor = 'lightblue';  // Change for visibility
+    popup.style.color = 'black';
+    popup.style.border = '2px solid black';
+    popup.style.zIndex = '10000';   // Ensure it's on top
+    popup.style.fontSize = '20px';  // Make text larger
+    popup.style.borderRadius = '10px'; // Rounded corners for aesthetics
+    popup.style.textAlign = 'center';
+    popup.style.boxShadow = '0px 0px 10px rgba(0,0,0,0.5)'; // Add shadow for better visibility
+
     document.body.appendChild(popup);
 
-    setTimeout(() => document.body.removeChild(popup), 3000);
+    // Remove the popup after 3 seconds
+    setTimeout(() => {
+        if (popup.parentNode) {
+            popup.parentNode.removeChild(popup);
+        }
+    }, 3000);
 }
+
 
 // Main function to execute the process
 function main() {
