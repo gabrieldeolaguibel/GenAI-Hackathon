@@ -1,9 +1,10 @@
 # find_word.py
 import os
 from openai import OpenAI
+from .generate_quiz import generate_quiz_options
 
-# Function to process text and return the chosen word
-def get_chosen_word(text):
+# Function to process text and return the chosen word and quiz options
+def get_chosen_word_and_quiz(text):
     # Read API keys
     api_key_path = './text_processing/api_key.txt'
     api_org_path = './text_processing/api_org.txt'
@@ -30,4 +31,8 @@ def get_chosen_word(text):
     )
 
     chosen_word = answer1.choices[0].message.content
-    return chosen_word
+
+    # Generate the quiz options using the chosen word
+    quiz_options = generate_quiz_options(chosen_word, api_key, api_org)
+
+    return chosen_word, quiz_options

@@ -56,6 +56,7 @@ function sendTextToServer(text) {
     .then(response => response.json())
     .then(data => {
         console.log('Chosen Word:', data.selectedWord);
+        console.log('Quiz Options:', data.quizOptions);
         // Additional actions based on the chosen word
     })
     .catch(error => {
