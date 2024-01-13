@@ -12,7 +12,7 @@ function isInViewport(element) {
 }
 
 // Get all text nodes that are in the viewport
-function getAllTextNodes() {
+function getAllTextInViewPort() {
     const walker = document.createTreeWalker(
         document.body,
         NodeFilter.SHOW_TEXT,
@@ -21,71 +21,52 @@ function getAllTextNodes() {
     );
 
     let node;
-    let textNodes = [];
+    let visibleText = [];
 
     while (node = walker.nextNode()) {
         if (isInViewport(node.parentElement)) {
-            textNodes.push(node);
+            visibleText.push(node.nodeValue.trim());
         }
     }
 
-    return textNodes;
+    return visibleText.join(' ');
 }
 
-// Pick a random word from the text nodes
-function pickRandomWord(textNodes) {
-    const allText = textNodes.map(node => node.nodeValue.trim()).join(' ');
-    const words = allText.split(/\s+/)
-        .filter(word => word.length >= 3) // Words should be at least three characters long
-        .filter(word => /^[a-zA-Z]+$/.test(word)); // Words should only contain alphabetical characters
-
-    if (words.length === 0) return null;
-    return words[Math.floor(Math.random() * words.length)];
-}
-
-
-// Create and display a popup with the chosen word
-function createPopup(word) {
-    console.log("Creating popup with word: ", word);
+// Create and display a popup with the visible text
+function createPopup(text) {
     const popup = document.createElement('div');
-    popup.textContent = `Selected word: ${word}`;
+    popup.textContent = text;
     popup.style.position = 'fixed';
-    popup.style.top = '50%';   // Center vertically
-    popup.style.left = '50%';  // Center horizontally
-    popup.style.transform = 'translate(-50%, -50%)'; // Adjust for centering
+    popup.style.top = '50%';
+    popup.style.left = '50%';
+    popup.style.transform = 'translate(-50%, -50%)';
     popup.style.padding = '20px';
-    popup.style.backgroundColor = 'lightblue';  // Change for visibility
+    popup.style.backgroundColor = 'lightblue';
     popup.style.color = 'black';
     popup.style.border = '2px solid black';
-    popup.style.zIndex = '10000';   // Ensure it's on top
-    popup.style.fontSize = '20px';  // Make text larger
-    popup.style.borderRadius = '10px'; // Rounded corners for aesthetics
+    popup.style.zIndex = '10000';
+    popup.style.fontSize = '16px';
+    popup.style.borderRadius = '10px';
     popup.style.textAlign = 'center';
-    popup.style.boxShadow = '0px 0px 10px rgba(0,0,0,0.5)'; // Add shadow for better visibility
+    popup.style.maxHeight = '80vh';
+    popup.style.overflowY = 'auto';
+    popup.style.width = '80%';
+    popup.style.boxShadow = '0px 0px 10px rgba(0,0,0,0.5)';
 
     document.body.appendChild(popup);
 
-    // Remove the popup after 3 seconds
     setTimeout(() => {
         if (popup.parentNode) {
             popup.parentNode.removeChild(popup);
         }
-    }, 3000);
+    }, 10000); // Increased timeout for longer text
 }
 
 
 // Main function to execute the process
 function main() {
-    console.log("Executing main function in content.js");
-    const textNodes = getAllTextNodes();
-    console.log("Text nodes found: ", textNodes.length);
-    const randomWord = pickRandomWord(textNodes);
-    console.log("Random word picked: ", randomWord);
-    if (randomWord) {
-        createPopup(randomWord);
-    } else {
-        console.log("No word found to display in popup");
-    }
+    const visibleText = getAllTextInViewPort();
+    createPopup(visibleText);
 }
 
 // Immediately execute main when script is injected
