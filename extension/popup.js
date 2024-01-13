@@ -18,5 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function pickAndShowWord() {
+    console.log("Sending message to content script");
     chrome.runtime.sendMessage({action: "pickWord"});
 }
+

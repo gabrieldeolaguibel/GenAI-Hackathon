@@ -69,10 +69,12 @@ function main() {
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.action === "pickWord") {
+            console.log("Message received. Executing main function.");
             main();
         }
     }
 );
+
 
 // The following code ensures the main function is only executed when a message is received
 // Remove these lines if you don't want the extension to execute immediately on page load
