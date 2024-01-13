@@ -22,15 +22,28 @@ function getAllTextInViewPort() {
 
     let node;
     let visibleText = [];
+    let wordCount = 0;
+    const maxWordCount = 200;
 
     while (node = walker.nextNode()) {
-        if (isInViewport(node.parentElement)) {
-            visibleText.push(node.nodeValue.trim());
+        if (isInViewport(node.parentElement) && wordCount < maxWordCount) {
+            let text = node.nodeValue.trim();
+            let words = text.split(/\s+/)
+                .filter(word => /^[a-zA-Z]+$/.test(word) && word.length >= 3);
+
+            for (let word of words) {
+                if (wordCount >= maxWordCount) {
+                    break;
+                }
+                visibleText.push(word);
+                wordCount++;
+            }
         }
     }
 
     return visibleText.join(' ');
 }
+
 
 // Create and display a popup with the visible text
 function createPopup(text) {
