@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!tabs[0].url.startsWith('chrome://')) {
                 chrome.scripting.executeScript({
                     target: { tabId: tabs[0].id },
-                    function: pickAndShowWord
+                    files: ['content.js']
                 });
             } else {
                 // Handle the case when the user is on a Chrome internal page
@@ -16,9 +16,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
-function pickAndShowWord() {
-    console.log("Sending message to content script");
-    chrome.runtime.sendMessage({action: "pickWord"});
-}
-

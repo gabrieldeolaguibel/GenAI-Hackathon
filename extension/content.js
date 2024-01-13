@@ -71,24 +71,5 @@ function main() {
     }
 }
 
-
-// Listen for messages from the popup
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        if (request.action === "pickWord") {
-            console.log("Message received in content script. Executing main function.");
-            main();
-        }
-    }
-);
-
-
-// The following code ensures the main function is only executed when a message is received
-// Remove these lines if you don't want the extension to execute immediately on page load
-/*
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', main);
-} else {
-    main();
-}
-*/
+// Immediately execute main when script is injected
+main();
