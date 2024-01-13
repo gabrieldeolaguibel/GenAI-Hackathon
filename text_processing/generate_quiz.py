@@ -19,7 +19,7 @@ option1, option2, option3, option4, coreect. Be sure that the correct answer is 
     )
 
     options_content = options.choices[0].message.content
-    print("DEBUG: Raw API Response:", options_content)  # Debug print
+    #print("DEBUG: Raw API Response:", options_content)  # Debug print
 
     try:
         options_dict = json.loads(options_content)

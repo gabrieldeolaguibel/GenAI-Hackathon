@@ -35,4 +35,6 @@ def get_chosen_word_and_quiz(text):
     # Generate the quiz options using the chosen word
     quiz_options = generate_quiz_options(chosen_word, api_key, api_org)
 
+    print("DEBUG: Chosen word:", chosen_word)  # Debug print
+    print("DEBUG: Quiz options:", quiz_options)  # Debug print
     return chosen_word, quiz_options
