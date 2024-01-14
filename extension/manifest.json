@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Random Word Picker",
+    "name": "Parrot",
     "version": "1.0",
     "action": {
         "default_popup": "popup.html"
