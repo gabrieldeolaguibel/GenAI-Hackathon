@@ -44,8 +44,43 @@ function getAllTextInViewPort() {
     return visibleText.join(' ');
 }
 
+// Function to highlight the chosen word
+function highlightChosenWord(word) {
+    const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+    );
+
+    let node;
+    const regExp = new RegExp("\\b" + word + "\\b", "gi"); // Global, case-insensitive
+
+    while ((node = walker.nextNode())) {
+        if (isInViewport(node.parentElement) && node.nodeValue.match(regExp)) {
+            const highlighted = node.nodeValue.replace(regExp, `<span class="highlighted-word">${word}</span>`);
+            const span = document.createElement('span');
+            span.innerHTML = highlighted;
+            node.parentNode.replaceChild(span, node);
+        }
+    }
+
+    // Add highlight style
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .highlighted-word {
+            background-color: yellow;
+            color: black;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
 // Function to show quiz popup
 function showQuizPopup(chosenWord, quizOptions) {
+    // Highlight the chosen word
+    highlightChosenWord(chosenWord);
+
     // Create the quiz container
     const quizContainer = document.createElement('div');
     quizContainer.id = 'quiz-popup';
@@ -89,26 +124,38 @@ function showQuizPopup(chosenWord, quizOptions) {
 // Function to handle option click
 function handleOptionClick(event, correctOption) {
     const selectedOption = event.target;
+    const chosenWord = selectedOption.closest('#quiz-popup').getAttribute('data-chosen-word');
 
     if (selectedOption.innerText.includes(correctOption)) {
-        selectedOption.style.backgroundColor = 'green'; // Correct answer, turn background green
-        selectedOption.style.color = 'white'; // Set text color to white for better visibility
+        selectedOption.style.backgroundColor = 'green'; // Correct answer
+        selectedOption.style.color = 'white'; // Set text color
     } else {
-        selectedOption.style.backgroundColor = 'red'; // Incorrect answer, turn background red
-        selectedOption.style.color = 'white'; // Set text color to white for better visibility
+        selectedOption.style.backgroundColor = 'red'; // Incorrect answer
+        selectedOption.style.color = 'white'; // Set text color
 
-        // Find the correct option and turn its background green
-        const correctOptionElement = document.querySelector('.quiz-option:contains(' + correctOption + ')');
+        // Find and style the correct option
+        const correctOptionElement = document.querySelector(`.quiz-option:contains('${correctOption}')`);
         correctOptionElement.style.backgroundColor = 'green';
         correctOptionElement.style.color = 'white';
     }
 
-    // Delay to display the correct/incorrect styling before closing the quiz
+    // Delay to display styling before closing the quiz and removing highlights
     setTimeout(() => {
-        // Remove the quiz popup
         const quizPopup = document.getElementById('quiz-popup');
-        quizPopup.parentNode.removeChild(quizPopup);
+        if (quizPopup) {
+            quizPopup.parentNode.removeChild(quizPopup);
+        }
+        removeHighlights(chosenWord);
     }, 2000); // Adjust the delay time as needed
+}
+
+// Function to remove highlights of the chosen word
+function removeHighlights() {
+    const highlightedElements = document.querySelectorAll('.highlighted-word');
+    highlightedElements.forEach(el => {
+        const textNode = document.createTextNode(el.textContent);
+        el.parentNode.replaceChild(textNode, el);
+    });
 }
 
 // Function to send text to the server and handle response
