@@ -26,7 +26,7 @@ def get_chosen_word_and_quiz(text):
               "Capitalize the first letter. Here's the text: \n") + text
               
     answer1 = myclient.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=[{"role": "user", "content": prompt}]
     )
 

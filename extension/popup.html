@@ -8,6 +8,7 @@
             margin: 0;
             padding: 0;
             background-color: #f3f3f3;
+            width: 275px;
         }
         .header {
             background-color: #3498db;
@@ -25,22 +26,25 @@
             margin: 10px 0;
         }
         .option {
-            padding: 15px;
-            background-color: white;
-            margin: 10px;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        padding: 15px;
+        background-color: white;
+        margin: 10px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Center the text */
+        box-sizing: border-box;
+        font-size: 16px; /* Increased font size */
+        font-weight: bold; /* Make text bold */
         }
         .option label{
             display: flex;
             align-items: center;
         }
-        .option img {
-            width: 24px;
-            height: 24px;
-            margin-right: 8px;
+        .option img {   /* change setting image size */
+            width: 36px;
+            height: 36px;
+            margin-right: 15px;
         }
         .switch {
         position: relative;
@@ -92,6 +96,12 @@
         .footer {
         display: flex;
         justify-content: space-between;
+        margin: 10px;
+        }
+        .half-option {
+        flex: 1;
+        margin: 5px;
+        text-align: center; 
         }
         </style>
 
@@ -110,7 +120,7 @@
         </label>
     </div>
     <div class="option">
-        <img src="gear.png" alt="Settings">
+        <img src="settings.png" alt="Settings" width="32" height="32"> <!-- Updated src to 'settings.png' -->
         <span>Extension Settings</span>
     </div>
     <div class="footer">

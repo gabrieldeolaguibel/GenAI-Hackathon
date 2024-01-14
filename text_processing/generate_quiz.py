@@ -14,7 +14,7 @@ Display in json format and let the first letter always be capitalized. Let the k
 option1, option2, option3, option4, coreect. Be sure that the correct answer is always one of the 4 options (chosen word translated in Spanish). No answers text should have accent/special characters.\n")
 
     options = myclient.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=[{"role": "user", "content": question}]
     )
 
