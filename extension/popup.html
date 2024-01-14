@@ -3,62 +3,125 @@
 <head>
     <title>Parrot</title>
     <style>
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
         }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
+        .header {
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            padding: 10px;
         }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
+        .header img {
+            vertical-align: middle;
+            margin-right: 8px;
         }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
+        .divider {
             background-color: white;
-            transition: .4s;
-            border-radius: 50%;
+            height: 2px;
+            margin: 10px 0;
         }
-
+        .option {
+            padding: 15px;
+            background-color: white;
+            margin: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .option label{
+            display: flex;
+            align-items: center;
+        }
+        .option img {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        margin-left: 10px;
+        }
+        .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        }
+        .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 34px;
+        }
+        .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+        }
         input:checked + .slider {
-            background-color: #2196F3;
+        background-color: #2196F3;
         }
-
         input:focus + .slider {
-            box-shadow: 0 0 1px #2196F3;
+        box-shadow: 0 0 1px #2196F3;
         }
-
         input:checked + .slider:before {
-            transform: translateX(26px);
+        transform: translateX(26px);
         }
-    </style>
+        .half-option {
+        flex: 1;
+        margin: 5px;
+        }
+        .footer {
+        display: flex;
+        justify-content: space-between;
+        }
+        </style>
+
 </head>
 <body>
-    <h1><img src="parrot.png" alt="Parrot_logo" width="100" height="100"></h1>
-    <label class="switch">
-        <input type="checkbox" id="toggle-extension">
-        <span class="slider round"></span>
-    </label>
-    <script src="popup.js"></script>
+    <div class="header">
+        <img src="parrot.png" alt="Parrot Logo" width="32" height="32">
+        <span>Parrot</span>
+    </div>
+    <div class="divider"></div>
+    <div class="option">
+        <span>Enable Extension</span>
+        <label class="switch">
+            <input type="checkbox" id="toggle-extension">
+            <span class="slider round"></span>
+        </label>
+    </div>
+    <div class="option">
+        <img src="gear.png" alt="Settings">
+        <span>Extension Settings</span>
+    </div>
+    <div class="footer">
+        <div class="half-option option">
+            <span>Dashboard</span>
+        </div>
+        <div class="half-option option">
+            <span>Support</span>
+</div>
+</div>
+<script src="popup.js"></script>
+
 </body>
 </html>
