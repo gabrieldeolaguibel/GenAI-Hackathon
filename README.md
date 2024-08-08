@@ -1,12 +1,13 @@
-# Parrot
-
-<center>
-![Team Holding Prize](docs/team.jpg)
-</center>
+# Parrot: GenAI Hackathon 1st place winner
 
 Parrot is a Chrome extension developed as part of the winning project for the GenAI venture bootcamp at IE University. The extension aims to provide a seamless solution for language learning by scanning the user's webview, selecting optimal words for learning in Spanish, and presenting them to the user in a quiz format. This functionality helps users learn new words in Spanish effortlessly as they browse the web.
 
+<p align="center">
+  <img src="docs/team.jpg" alt="Team Holding Prize">
+</p>
+
 [School article about the project](https://www.ie.edu/school-science-technology/news/sci-tech-students-develop-startup-ideas-in-generative-ai-bootcamp/)
+
 [Pitch deck](docs/Parrot%20-%20Pitch.pdf)
 
 ## Overview
