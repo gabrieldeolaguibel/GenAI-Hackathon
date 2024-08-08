@@ -7,11 +7,11 @@ def generate_quiz_options(chosen_word, api_key, api_org):
     myclient = OpenAI(api_key=api_key, organization=api_org)
 
     # Generate the quiz options
-    question = ("I want to make a multiple choice quiz where the user is going to select the correct word.\
-I am going to ask the user 'How do you say this word in Spanish?'\
-Can you generate me the 4 options based on the word:" + chosen_word + ". Only output the 4 options in Spanish please and a 5th json element with the correcrt answer. no additional text. \
-Display in json format and let the first letter always be capitalized. Let the keys be\
-option1, option2, option3, option4, coreect. Be sure that the correct answer is always one of the 4 options (chosen word translated in Spanish). No answers text should have accent/special characters.\n")
+    question = ("You will make a multiple choice quiz where the user is going to select the correct word.\
+    the quiz question will be 'How do you say this <x> word in Spanish?'\
+    Generate the 4 options based on the word:" + chosen_word + ". Only output the 4 options in Spanish please and a 5th json element with the correcrt answer. no additional text. \
+    Display in json format and let the first letter always be capitalized. Let the keys be\
+    option1, option2, option3, option4, coreect. Be sure that the correct answer is always one of the 4 options (chosen word translated in Spanish). No answers text should have accent/special characters.\n")
 
     options = myclient.chat.completions.create(
         model="gpt-4",

@@ -1,4 +1,5 @@
-# app.py
+# This flask app facilitates the communication between the front-end extension and the text processing logic
+
 from flask import Flask, request, jsonify
 from text_processing.find_word import get_chosen_word_and_quiz
 from flask_cors import CORS
