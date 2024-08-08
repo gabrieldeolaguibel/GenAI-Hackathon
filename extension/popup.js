@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() { // Wait for the popup to load
     var toggle = document.getElementById('toggle-extension');
 
     toggle.addEventListener('change', function() {

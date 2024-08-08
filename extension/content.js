@@ -1,4 +1,4 @@
-// This script will handle scanning the website and sending text to the Flask server.
+// Handles scanning the website and sending text to the Flask server.
 
 // Check if element is in the current viewport
 function isInViewport(element) {
@@ -44,7 +44,7 @@ function getAllTextInViewPort() {
     return visibleText.join(' ');
 }
 
-// Function to highlight the chosen word
+// Function to highlight the chosen word so the user can see where it was chosen from
 function highlightChosenWord(word) {
     const walker = document.createTreeWalker(
         document.body,
